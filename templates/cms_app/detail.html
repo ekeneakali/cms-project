@@ -1,0 +1,38 @@
+{% extends 'cms_app/base.html' %}
+{% load static %}
+{% block title %}
+Detail
+{% endblock %}
+
+
+{% block content %}
+<section id="sectionTitle">
+  <div class="pageTitle">
+    <h1>About Us</h1>
+  </div>
+</section>
+<!-- END OF PAGE TITLE -->
+<section id="content">
+  <div class="row">
+    <div class="col-sm-9 text-center" id="detailContent">
+      {% if detail %}
+      <div class="contain-img">
+        <div class="img-div">
+            <img src="{{ detail.get_profile }}" class="img-responsive">
+        </div>
+      </div>
+      <div class="detail-content">
+        <h2>{{ detail.team_name  }}</h2>
+        <p>
+          {{ detail.biography }}
+        </p>
+      </div>
+
+      {% endif %}
+       
+    </div>
+    {% include 'cms_app/sidebar.html' %}
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'cms_app/base.html' %}
+{% load static %}
+
+{% block title %}
+Comment-reply
+{% endblock %}
+
+
+{% block content %}
+<section id="sectionTitle">
+  <div class="pageTitle">
+    <h1> Comment reply</h1>
+  </div>
+</section>
+<!-- END OF PAGE TITLE -->
+
+
+      {% if messages %}
+        {% for m in messages %}
+            <div class="alert alert-success">{{ m }}</div>
+        {% endfor %}
+      {% endif %}
+
+      {% if comment_reply %}
+        
+        <div class="comment">
+          <p>Name: {{ comment_reply.name }}</p> 
+          <p>Message: {{ comment_reply.comment }}</p>
+          <p>Created on: {{comment_reply.created_at}}</p> 
+        </div>
+        
+      {% endif %}
+      {% if reply %}
+        {% for x in reply %}
+        
+        <div class="comment">
+          <p>Name: {{ x.name }}</p> 
+          <p>Message: {{ x.comment }}</p>
+          <p>Created on: {{ x.created_at}}</p> 
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <center>
+            <h3> You havn't not replied this post</h3>
+        </center>
+        
+      {% endif %}
+      <form method="POST" style="text-align: left;">
+        <div class="form-group">
+          <label for="">Name</label>
+          <input type="text" value="{{request.user.username}}" name="name" required class="form-control" placeholder="Your Name">
+        </div>
+        <div class="form-group">
+          <label for="">Comment</label>
+         <textarea name="comment" class="form-control"></textarea>
+        </div>
+        <input type="submit" class="btn btn-primary" value="ReplyComment">
+        {% csrf_token %}
+        
+      </form>
+    <!-- END OF ASIDE CONTENT -->
+
+{% endblock %}

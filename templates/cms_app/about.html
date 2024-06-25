@@ -1,0 +1,70 @@
+{% extends 'cms_app/base.html' %}
+{% load static %}
+
+{% block title %}
+About
+{% endblock %}
+
+{% block content %}
+
+<section id="sectionTitle">
+  <div class="pageTitle">
+    <h1>About Us</h1>
+  </div>
+</section>
+<!-- END OF PAGE TITLE -->
+<section id="content">
+  <div class="row">
+    <div class="col-sm-9 text-center" id="mainContent">
+      <div class="row">
+
+        {% if team %}
+            {% for t in team %}
+            <div class="col-sm-4">
+              <a href="{% url 'cms_app:ekene_detail' t.id %}">
+                  <img src="{{ t.get_profile }}" class="img-circle">
+              </a>
+              <h2>{{ t.team_name }}</h2>
+              <a href="{% url 'cms_app:ekene_detail' t.id %}" class="btn btn-primary">Readmore</a>
+            </div>
+            {% endfor %}
+
+        {% endif %}
+        
+        
+      </div>
+      <div class="row">
+        <div class="col-sm-12 text-left">
+          <h3>Operating Staff</h3>
+          <table class="table">
+            <tr>
+              <th>Firstname</th>
+              <th>Lastname</th>
+              <th>Email</th>
+            </tr>
+            <tr>
+              <td>John</td>
+              <td>Doe</td>
+              <td>john.doe@email.com</td>
+            </tr>
+             <tr>
+              <td>Slim</td>
+              <td>Brim</td>
+              <td>slim.brin@email.com</td>
+            </tr>
+             <tr>
+              <td>Kashamawu</td>
+              <td>Idris</td>
+              <td>kashamawu.idris@email.com</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% include 'cms_app/sidebar.html' %}
+
+  </div>
+</section>
+
+{% endblock %}
+

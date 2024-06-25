@@ -1,0 +1,50 @@
+{% extends 'cms_app/base.html' %}
+{% load static %}
+
+{% block title %}
+Services
+{% endblock %}
+
+{% block content %}
+<section id="sectionTitle">
+  <div class="pageTitle">
+    <h1>Services</h1>
+  </div>
+</section>
+<!-- END OF PAGE TITLE -->
+<section id="content">
+  <div class="row">
+    <div class="col-sm-9 text-center" id="mainContent">
+      <div class="row">
+        <div class="col-sm-4">
+          <span class="fa fa-android"></span>
+          <h1>Mobile Development</h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat nemo, id expedita at molestias hic odit amet officiis laboriosam vero optio inventore dolorum accusantium fugiat accusamus blanditiis ratione, doloribus voluptates.
+          </p>
+          <a href="#" class="btn btn-primary">Readmore</a>
+        </div>
+        <div class="col-sm-4">
+          <span class="fa fa-apple"></span>
+          <h1>Software Development</h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat nemo, id expedita at molestias hic odit amet officiis laboriosam vero optio inventore dolorum accusantium fugiat accusamus blanditiis ratione, doloribus voluptates.
+          </p>
+          <a href="#" class="btn btn-primary">Readmore</a>
+        </div>
+        <div class="col-sm-4">
+          <span class="fa fa-code"></span>
+          <h1>Web Development</h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat nemo, id expedita at molestias hic odit amet officiis laboriosam vero optio inventore dolorum accusantium fugiat accusamus blanditiis ratione, doloribus voluptates.
+          </p>
+          <a href="#" class="btn btn-primary">Readmore</a>
+        </div>
+      </div>
+    </div>
+    {% include 'cms_app/sidebar.html' %}
+    <!-- END OF ASIDE CONTENT -->
+  </div>
+</section>
+{% endblock %}
+

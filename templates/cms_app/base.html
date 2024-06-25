@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      {% block title %}
+      {% endblock %}
+    </title>
+    <link href="{% static 'cms_app/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'cms_app/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'cms_app/css/ekene.css' %}" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    <div class="container">
+      <header id="siteLogo">
+        <div class="row">
+          <div class="col-sm-3">
+            <a href="index.html">
+              <img src="{% static 'cms_app/images/brandlogo6.png' %}">
+            </a>
+          </div>
+          <div class="col-sm-9">
+            <span class="social-logo pull-right">
+              <a href="#">
+                <img src="{% static 'cms_app/images/fb.png' %}" class="img-circle">
+              </a>
+              <a href="#">
+                <img src="{% static 'cms_app/images/tw.png' %}" class="img-circle">
+              </a><a href="#">
+                <img src="{% static 'cms_app/images/gp.png' %}" class="img-circle">
+              </a>
+            </span>
+          </div>
+        </div>
+      </header>
+      {{ request.user.username }}
+      <!-- END OF SITE LOGO ROW -->
+      <section id="siteMenu">
+        <div class="row">
+          <nav class="navbar navbar-inverse">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-target="#mainNav" data-toggle="collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="collapse navbar-collapse" id="mainNav">
+              <ul class="nav navbar-nav">
+                {% url 'home' as Home %}
+                {% url 'cms_app:about' as About %}
+                {% url 'cms_app:service' as Service %}
+                {% url 'cms_app:contact' as Contact %}
+                <li {% if request.path ==   Home %} class="active" {% endif %}><a href="{% url 'home' %}">Home</a></li>
+                <!-- <li {% if request.path ==   About %} class="active" {% endif %}><a href="{% url 'cms_app:about' %}">About</a></li>
+                  
+                 -->
+
+                 <li>
+                  {% if request.user.is_authenticated %}
+                  <a href="{% url 'cms_app:profile' %}">Profile</a>
+                  {% endif %}
+                  </li>
+                <li><a href="{% url 'cms_app:post_list' %}">Blog</a></li>
+                <!-- {% if menu %}
+                    {% for m in menu %}
+                    <li><a href="{% url 'cms_app:post_from_cat' m.id %}">{{ m.cat_name }}</a></li>
+                    {% endfor %}
+                {% endif %} -->
+
+                <li><a href="{% url 'cms_app:register' %}">Register</a></li>
+                <li><a href="{% url 'cms_app:custom_login' %}">Login</a></li>
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'cms_app:confirm_logout' %}">Log out</a></li>
+                
+                {% endif %}
+                <!-- <li {% if request.path ==   Service %} class="active" {% endif %}><a href="{% url 'cms_app:service' %}">Services</a></li> -->
+                <li {% if request.path ==   Contact %} class="active" {% endif %}><a href="{% url 'cms_app:contact' %}">Contact</a></li>
+                <li><a href="{% url 'cms_app:category' %}">Category</a></li>
+                
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </section>
+      <!-- END OF SITE MENU -->
+
+      {% block content %}
+      
+      {% endblock %}
+      
+    </div>
+    {% if messages %}
+    {% for m in messages %}
+        <div class="alert alert-success">{{ m }}</div>
+    {% endfor %}
+{% endif %}
+
+    <footer class="container-fluid" id="siteFooter">
+      <div class="row">
+        <div class="col-sm-4">
+          <h4>Menu</h4>
+          <ul class="nav">
+            
+            <li><a href="{% url 'cms_app:about' %}">About</a></li>
+            <li><a href="{% url 'cms_app:service' %}">Services</a></li>
+            <li><a href="{% url 'cms_app:contact' %}">Contact</a></li>
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'cms_app:password_change' %}">Password Change</a></li>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="col-sm-4">
+          <h4>Services</h4>
+          <ul class="nav">
+            <li><a href="#">Web Development</a></li>
+            <li><a href="#">Software Development</a></li>
+            <li><a href="#">Mobile App Development</a></li>
+            <!-- <li><a href="#">Password Change</a></li> -->
+          </ul>
+        </div>
+         
+        <div class="col-sm-4">
+          <h4>Subscribe</h4>
+          <form action="{% url 'cms_app:news' %}" class="form" method="post">
+            
+            <div class="form-group">
+              <input type="text" name="email" class="form-control">   
+              <input type="submit" value="Subscribe" class="btn btn-primary btn-block">
+            </div>
+            {% csrf_token%}
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <p>&copy; 2024</p>
+        </div>
+        <div class="col-md-9">
+          <p class="copy pull-right">
+            <a href="#" target="_blank">www.ekeneakali.com</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{% static 'cms_app/js/jquery.js' %}"></script>
+    <script src="{% static 'cms_app/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

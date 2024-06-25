@@ -1,0 +1,51 @@
+{% extends 'cms_app/base.html' %}
+{% load static %}
+{% block title %}
+Post List
+{% endblock %}
+
+{% block content %}
+
+<section id="sectionTitle">
+  <div class="pageTitle">
+    <h1>Blog Post</h1>
+  </div>
+</section>
+<!-- END OF PAGE TITLE -->
+<section id="content">
+  <div class="row">
+    <div class="col-sm-9" id="mainContent">
+      {% if show_post %}
+        {% for s in show_post %}
+        <div class="row">
+          <div class="col-md-4 col-sm-4">
+            <div class="thumbnail">
+              <img src="{{ s.pst_image.url }}">
+            </div>
+          </div> 
+          <div class="col-md-8 col-sm-8">
+            <div class="blog-content">
+               <p>
+                Time:{{ s.created_at }}, Category:<a href="{% url 'cms_app:post_from_cat' s.category.id %}">{{ s.category }}.</a>. 
+                Posted By: <a href="#">{{ s.created_by }}</a>.
+                
+              </p>
+              <h2>{{ s.pst_title }}</h2>
+              <p>
+                {{ s.content|truncatewords:30 }}
+              </p>
+              <a href="{% url 'cms_app:single_post' s.id %}" class="btn btn-success">Readmore</a>
+            </div>
+          </div>
+        </div>
+      
+        {% endfor %}
+      {% endif %}
+      
+     
+    </div>
+    {% include 'cms_app/sidebar.html' %}
+  </div>
+</section>
+
+{% endblock %}

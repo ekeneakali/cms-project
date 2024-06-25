@@ -1,0 +1,30 @@
+{% extends 'cms_app/base.html' %}
+{% load static %}
+{% block title %}
+Category
+{% endblock %}
+
+
+{% block content %}
+<section id="sectionTitle">
+  <div class="pageTitle">
+    <h1>Blog Category</h1>
+  </div>
+  </section>
+
+<!-- END OF PAGE TITLE -->
+
+    
+
+        {% if category %}
+            {% for x in category %}
+                <div class="btn btn-block">
+                    <a href="{% url 'cms_app:category_detail' x.id %}">{{ x.cat_name }}</a>
+                </div>
+                {% endfor %}
+        {% endif %}
+
+    
+  
+
+{% endblock %}

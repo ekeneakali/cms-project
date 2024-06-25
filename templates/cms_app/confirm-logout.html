@@ -1,0 +1,31 @@
+{% extends 'cms_app/base.html' %}
+{% load static %}
+{% block title %}
+Category-detail
+{% endblock %}
+
+
+{% block content %}
+<section id="sectionTitle">
+  <div class="pageTitle">
+    <h1>
+      
+        {{ category.cat_name }}
+
+    </h1>
+  </div>
+  </section>
+
+<!-- END OF PAGE TITLE -->
+
+    
+
+        <center>
+            <div class="confirm_logout">
+
+                Are you sure you want to log-out <a href="{% url 'cms_app:custom_logout' %}" class="btn btn-primary">Yes</a> or <a href="{% url 'home' %}" class="btn btn-success">No</a>
+
+            </div>
+        </center>
+
+{% endblock %}

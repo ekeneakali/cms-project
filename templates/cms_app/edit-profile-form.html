@@ -1,0 +1,45 @@
+
+{% extends 'cms_app/base.html' %}
+{% load static %}
+{% block title %}
+Edit Profile
+{% endblock %}
+
+
+{% block content %}
+      <!-- END OF SITE MENU -->
+      <section id="sectionTitle">
+        <div class="pageTitle">
+          <h1>Profile Form</h1>
+        </div>
+      </section>
+      <!-- END OF PAGE TITLE -->
+      {% if messages %}
+              {% for m in messages %}
+                  <div class="alert alert-success">{{ m }}</div>
+              {% endfor %}
+          {% endif %}
+      <section id="content">
+        <div class="row">
+          <div class="col-sm-9 text-center" id="mainContent">
+            <div class="row">
+              <div class="col-sm-12">
+                <form action="#" class="form" method="post" enctype="multipart/form-data">
+                  {% csrf_token%}
+                  {{ form.as_p }}
+                                 
+                              <!-- <table class="table table-bordererd">
+                                <tr>
+                                    {{ form.as_table }}
+                                </tr>
+                              </table> -->
+                 <center>
+                    <input type="submit" class="btn btn-primary" value="EditProfile">
+                 </center>
+                </form>
+              </div>
+            </div>
+           
+          </div>
+          
+{% endblock %}

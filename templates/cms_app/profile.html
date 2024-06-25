@@ -1,0 +1,58 @@
+{% extends 'cms_app/base.html' %}
+{% load static %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block content %}
+
+<section id="sectionTitle">
+  <div class="pageTitle">
+    <h1>Profile</h1>
+  </div>
+</section>
+{% if messages %}
+              {% for m in messages %}
+                  <div class="alert alert-success">{{ m }}</div>
+              {% endfor %}
+          {% endif %}
+<!-- END OF PAGE TITLE -->
+<section id="content">
+  <div class="row">
+    <div class="col-sm-9 text-center" id="mainContent">
+      <div class="row">
+
+        
+        
+      </div>
+      <div class="row">
+        <div class="col-sm-12 text-left">
+          <h3>User profile</h3>
+          
+          {% if profile %}
+            {% for x in profile %}
+              <a href="{% url 'cms_app:edit_pic' %}"><img src="{{ x.image.url}}" alt="" class="img-thumbnail" width="200px" height="200px"></a>
+              
+              <p>
+                <strong>Biography</strong>:{{x.biography}}
+              </p>
+              {% endfor %}
+                {% else %}
+                <a href="{% url 'cms_app:profile_form' %}" class="btn btn-success">Add a Profile Picture</a><br>
+          {% endif %}
+          
+              <a href="{% url 'cms_app:edit_profile' %}" class="btn btn-primary">Edit profile</a>
+            
+             
+        
+        </div>
+      </div>
+    </div>
+    {% include 'cms_app/sidebar.html' %}
+
+  </div>
+</section>
+
+{% endblock %}
+

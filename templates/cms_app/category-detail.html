@@ -1,0 +1,65 @@
+{% extends 'cms_app/base.html' %}
+{% load static %}
+{% block title %}
+Category-detail
+{% endblock %}
+
+
+{% block content %}
+<section id="sectionTitle">
+  <div class="pageTitle">
+    <h1>
+      
+        <a href="">{{ category.cat_name }}</a>
+
+    </h1>
+  </div>
+  </section>
+
+<!-- END OF PAGE TITLE -->
+
+    
+
+        <div class="head-container">
+            <div class="container-fluid">
+                <div class="row">
+
+                    
+            
+                <div class="col-md-4">
+                  {% if post %}
+
+                  {% for x in post %}
+                  
+                    <p>
+                      <a href="">{{ x.pst_title }}</a>
+                    </p>
+                    <a href="{% url 'cms_app:single_post' x.id %}">
+                      <img src="{{x.pst_image.url}}" width="300px" height="300px" alt="">
+
+                    </a>
+                  
+                        
+                  {% endfor %}
+
+                    {% else %}
+                    <center>
+                      <h3>No post in this category</h3>
+                    </center>
+
+                        {% endif %}
+
+                </div>
+            
+        
+
+
+                </div>
+
+            </div>
+
+        </div>
+    
+  
+
+{% endblock %}

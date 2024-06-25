@@ -1,0 +1,87 @@
+{% extends 'cms_app/base.html' %}
+{% load static %}
+{% block title %}
+Homepage
+{% endblock %}
+
+
+{% block content %}
+{% if messages %}
+              {% for m in messages %}
+                  <div class="alert alert-success">{{ m }}</div>
+              {% endfor %}
+          {% endif %}
+<section id="banner">
+  <div class="row">
+    <div class="col-sm-3 col-sm-offset-9 text-center">
+      <div class="caption">
+        <h1>Join Us</h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adi nam totam modi, expedita quos sit voluptates distinctio porro illo esse asperiores, animi eveniet ipsam?
+        </p>
+        
+        <a href="#" class="btn btn-primary">Readmore</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="services" class="text-center">
+  <div class="page-header">
+    <h1>Services</h1>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <span class="fa fa-android"></span>
+      <h1>Mobile Development</h1>
+      <p>
+        god is god ipsum dolor sit amet, consectetur adipisicing elit. Placeat nemo, id expedita at molestias hic odit amet officiis laboriosam vero optio inventore dolorum accusantium fugiat accusamus blanditiis ratione, doloribus voluptates.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat nemo, id expedita at molestias hic odit amet officiis laboriosam vero optio inventore dolorum accusantium fugiat accusamus blanditiis ratione, doloribus voluptates.
+      </p>
+      <a href="#" class="btn btn-primary">Readmore</a>
+    </div>
+    <div class="col-sm-4">
+      <span class="fa fa-apple"></span>
+      <h1>Software Development</h1>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat nemo, id expedita at molestias hic odit amet officiis laboriosam vero optio inventore dolorum accusantium fugiat accusamus blanditiis ratione, doloribus voluptates.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat nemo, id expedita at molestias hic odit amet officiis laboriosam vero optio inventore dolorum accusantium fugiat accusamus blanditiis ratione, doloribus voluptates.
+      </p>
+      <a href="#" class="btn btn-primary">Readmore</a>
+    </div>
+    <div class="col-sm-4">
+      <span class="fa fa-code"></span>
+      <h1>Web Development</h1>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat nemo, id expedita at molestias hic odit amet officiis laboriosam vero optio inventore dolorum accusantium fugiat accusamus blanditiis ratione, doloribus voluptates.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat nemo, id expedita at molestias hic odit amet officiis laboriosam vero optio inventore dolorum accusantium fugiat accusamus blanditiis ratione, doloribus voluptates.
+      </p>
+      <a href="#" class="btn btn-primary">Readmore</a>
+    </div>
+  </div>
+</section>
+<!-- END OF SERVICE SECTION -->
+<section id="services" class="text-center">
+  <div class="page-header">
+    <h1>Latest News</h1>
+  </div>
+  <div class="row">
+    {% if latest %}
+        {% for l in latest %}
+        <div class="col-sm-4">
+          <a href="{% url 'cms_app:single_post' l.id %}"><img src="{{ l.pst_image.url }}" class="img-responsive"></a>
+           <p>
+            Posted:{{ l.created_at }}, Category:<a href="{% url 'cms_app:post_from_cat' l.category.id %}">{{ l.category }}.</a>. 
+            Posted By: <a href="#">{{ l.created_by }}</a>
+          </p>
+           <h3>{{ l.pst_title }}</h3>
+           <p>
+              {{ l.content|truncatewords:15 }}
+           </p>
+           <a href="{% url 'cms_app:single_post' l.id %}" class="btn btn-success">Readmore</a>
+         </div>
+        {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

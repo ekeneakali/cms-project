@@ -1,0 +1,64 @@
+{% extends 'cms_app/base.html' %}
+{% load static %}
+
+{% block title %}
+Contact
+{% endblock %}
+
+{% block content %}
+
+<section id="sectionTitle">
+  <div class="pageTitle">
+    <h1>Contact</h1>
+  </div>
+</section>
+<!-- END OF PAGE TITLE -->
+<section id="content">
+  <div class="row">
+    <div class="col-sm-9 text-center" id="mainContent">
+      <div class="row">
+        <div class="col-sm-12">
+          {% if messages %}
+              {% for m in messages %}
+                  <div class="alert alert-success">{{ m }}</div>
+              {% endfor %}
+          {% endif %}
+          <form action="" class="form" method="post" enctype="multipart/form-data">
+            
+              <!-- END OF NAME -->
+             
+              
+            <!-- END OF GENDER -->
+           
+           
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <!-- <label for="labelMessage">Message</label> -->
+                  <!-- <textarea name="message" id="labelMessage" class="form-control"> </textarea> -->
+
+                  {% csrf_token%}
+                                <table class="table table-boredered">
+
+                                  <tr>
+                                    {{form.as_table}}
+                                  </tr>
+
+                                </table>
+                                 
+                              
+                </div>
+              </div>
+              <input type="submit" name="send" value="Send" class="btn btn-primary">
+            </div>
+            
+          </form>
+        </div>
+      </div>
+     
+    </div>
+    {% include 'cms_app/sidebar.html' %}
+  </div>
+</section>
+
+{% endblock %}
