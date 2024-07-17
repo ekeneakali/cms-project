@@ -33,4 +33,10 @@ urlpatterns = [
     path('edit-pic', views.edit_pic, name='edit_pic'),
     path('edit-form/<int:id>/', views.edit_form, name='edit_form'),
     path('profile-delete/<int:id>/', views.profile_delete, name='profile_delete'),
+    path('post-form', views.post_form, name='post_form'),
+    path('profile_detail/<int:id>/', views.profile_detail, name='profile_detail'),
+    path('subscribe_user/<int:pk>/', views.subscribe_user, name='subscribe_user'),
+    path('post-view', views.post_view, name='post_view'),
+    path('edit-post/<int:id>/', views.edit_post, name='edit_post'),
+    path('del-post/<int:id>/', views.del_post, name='del_post'),
 ]
