@@ -4,6 +4,6 @@ Hi {{ request.user.username }},
 
 Please click on the link below to confirm your registration:
 
-http://{{ domain }}{% url 'frontend:activate' uidb64=uid token=token %}
+http://{{ domain }}{% url 'cms_app:activate' uidb64=uid token=token %}
 
 {% endautoescape %}
