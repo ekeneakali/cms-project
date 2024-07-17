@@ -62,7 +62,8 @@ def post_list(request):
 def single_post(request, post_id):
     single = Post.objects.get(id=post_id)
     
-    get_comment = Comment.objects.filter(post__id=post_id)
+    get_comment = Comment.objects.filter(post__id=post_id).order_by('-created_at')[:3]
+    
     if request.method == 'POST':
         name = request.POST.get('name')
         comment = request.POST.get('comment')
@@ -79,7 +80,7 @@ def single_post(request, post_id):
     
 
     
-    return render(request, 'cms_app/single-blog.html', {'single':single, 'comment':get_comment, 'is_liked':is_liked, 'total_likes':single.total_likes})
+    return render(request, 'cms_app/single-blog.html', {'single':single, 'comment':get_comment, 'is_liked':is_liked, 'total_likes':single.total_likes, 'profile':profile})
 
 def comment_detail(request, id):
 
@@ -110,6 +111,21 @@ def like_blog(request, pk):
         messages.success(request, 'thank you for liking this post')
             
     return HttpResponseRedirect(reverse('cms_app:single_post', args=[str(pk)]))
+def subscribe_user(request, pk):
+    post = get_object_or_404(Profile, id=request.POST.get('post_id'))
+    is_liked = False
+    if post.subscribe.filter(id=request.user.id).exists():
+        post.subscribe.remove(request.user)
+        is_liked = False
+        messages.success(request, 'Subscription remove successfully')
+    else:
+
+        post.subscribe.add(request.user)
+        is_liked = True
+        messages.success(request, 'Subscription addedd successfully')
+            
+    return HttpResponseRedirect(reverse('cms_app:profile_detail', args=[str(pk)]))
+
 
 
 def post_from_cat(request, cat_id):
@@ -124,8 +140,10 @@ def service(request):
 
 def profile(request):
 
-    profile = Profile.objects.all()
-    return render(request, 'cms_app/profile.html', {'profile':profile})
+    profile = Profile.objects.filter(user=request.user)
+
+    post = Post.objects.filter(user=request.user).count()
+    return render(request, 'cms_app/profile.html', {'profile':profile, 'post':post})
 
 def edit_pic(request):
 
@@ -149,7 +167,74 @@ def profile_form(request):
         form = ProfileForm()
 
     return render(request, "cms_app/profile-form.html", {'form':form})
+def profile_detail(request, id):
+    if not request.user.is_authenticated:
+        messages.success(request, 'Login to continue')
+        return redirect('cms_app:custom_login')
         
+    profile = Profile.objects.get(pk=id)
+    post = Post.objects.filter(user_id=id)
+    profile_count = Post.objects.filter(user=request.user).count()
+
+    is_liked = False
+    if profile.subscribe.filter(id=request.user.id).exists():
+        is_liked = True
+    
+    
+    return render(request, 'cms_app/profile-detail.html', {'profile':profile, 'post':post, 'profile_count':profile_count, 'is_liked':is_liked, 'total_subscribe':profile.total_subscribe})
+
+def post_form(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            
+            messages.success(request, 'Post added successfully ')
+            return redirect('cms_app:post_view') 
+
+    else:
+        form = PostForm()
+
+    return render(request, "cms_app/post-form.html", {'form':form})
+
+
+
+def post_view(request):
+
+    view_post = Post.objects.filter(user=request.user)
+
+    return render(request, "cms_app/view-post.html", {'view_post':view_post})
+
+
+def edit_post(request, id):
+    edit = Post.objects.get(pk=id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=edit)
+        
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            
+            messages.success(request, 'Post edited successfully ')
+            return redirect('cms_app:post_view') 
+
+    else:
+        form = PostForm(instance=edit)
+
+    return render(request, "cms_app/edit-post.html", {'form':form})
+        
+
+def del_post(request, id):
+
+    post = Post.objects.get(pk=id)
+
+    post.delete()
+    messages.success(request, 'Post deleted successfully')
+    return redirect('cms_app:post_view') 
 
 
 def edit_form(request, id):
@@ -204,7 +289,7 @@ def register(request):
 
 def activateEmail(request, user, to_email):
     mail_subject = 'Activate your user account.'
-    message = render_to_string('frontend/account.html', {
+    message = render_to_string('cms_app/account.html', {
         'user': user.username,
         'domain': get_current_site(request).domain,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -230,7 +315,7 @@ def activate(request, uidb64, token):
         user.save()
         
         messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
-        return redirect('frontend:custom_login')
+        return redirect('cms_app:custom_login')
     else:
         messages.error(request, 'Activation link is invalid!')
     
