@@ -111,7 +111,7 @@ class PostForm(forms.ModelForm):
     class Meta():
         model = Post
         fields = '__all__'
-        exclude = ['user', 'profile', 'likes', 'num_site']
+        exclude = ['created_by', 'profile', 'likes', 'num_site']
 
 
 
