@@ -54,7 +54,7 @@ Blog detail
                     
                     {% endif %}
       </p>
-
+      
       {% if messages %}
         {% for m in messages %}
             <div class="alert alert-success">{{ m }}</div>
@@ -62,16 +62,24 @@ Blog detail
       {% endif %}
 
       
+      Author:<a href="">{{ single.user.username }}</a> 
 
+        {% if request.user.is_authenticated %}
+        <p>
+          {{ comment|length}} Comment{{ comment|pluralize}}
+        </p>
+        {% endif %}
       {% if comment %}
+    
         {% for c in comment %}
+        
         <div class="comment">
-          
-            <p>Name: {{ c.name }}</p> 
+          <!-- <img src="{{ c.user.profile.image.url}}" alt="" width="50px" height="50px"> -->
+          <p>Name:{{ c.name }}</p>
           <p>Message: {{ c.comment }}</p>
-          <p>Created on: {{c.created_at}}</p>
+          <p>Created: {{c.created_at|timesince}} ago</p>
           {% if request.user.is_authenticated %}
-          <a href="{% url 'cms_app:comment_detail' c.id %}" class="btn btn-primary">ReplyComment</a>
+          <a href="{% url 'cms_app:comment_detail' c.id %}" class="btn btn-primary">Reply</a> 
            {% else %}
            <a href="{% url 'cms_app:custom_login' %}" class="btn btn-info">Login to reply this comment</a>
           {% endif %}
@@ -80,14 +88,19 @@ Blog detail
         {% else %}
 
         <center>
-            <h3> You havn't not commented on this post</h3>
+            <h3> Be the first to comment on this post</h3>
+            {% if request.user.is_authenticated %}
+              {% else %}
+            <a href="{% url 'cms_app:custom_login' %}" class="btn btn-primary">Comment</a>
+            {% endif %}
         </center>
         
       {% endif %}
+      {% if request.user.is_authenticated %}
       <form method="POST" style="text-align: left;">
         <div class="form-group">
-          <label for="">Name</label>
-          <input type="text" value="{{request.user.username}}" name="name" required class="form-control" placeholder="Your Name">
+          <!-- <label for="">Name</label> -->
+          <input type="hidden" value="{{request.user.username}}" name="name" required class="form-control" placeholder="Your Name">
         </div>
         <div class="form-group">
           <label for="">Comment</label>
@@ -97,6 +110,7 @@ Blog detail
         {% csrf_token %}
         
       </form>
+      {% endif %}
 
   </div>
     {% endif %}
