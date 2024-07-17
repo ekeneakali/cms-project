@@ -204,7 +204,7 @@ def post_form(request):
 
 def post_view(request):
 
-    view_post = Post.objects.filter(user=request.user)
+    view_post = Post.objects.filter(created_by=request.user)
 
     return render(request, "cms_app/view-post.html", {'view_post':view_post})
 
