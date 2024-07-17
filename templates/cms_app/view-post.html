@@ -1,0 +1,70 @@
+{% extends 'cms_app/base.html' %}
+{% load static %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<section id="sectionTitle">
+  <div class="pageTitle">
+    <h1>Dashboard</h1>
+  </div>
+</section>
+{% if messages %}
+              {% for m in messages %}
+                  <div class="alert alert-success">{{ m }}</div>
+              {% endfor %}
+          {% endif %}
+<!-- END OF PAGE TITLE -->
+<section id="content">
+  <div class="row">
+    <div class="col-sm-9 text-center" id="mainContent">
+      <div class="row">
+
+        
+        
+      </div>
+      <div class="row">
+        <div class="col-sm-12 text-left">
+            {% if view_post %}
+          <h3>My post</h3>
+          {% endif %}
+          
+          <table class="table table-bordererd">
+            <tr>
+            <th>Image</th>
+            <th>Description</th>
+            <th colspan="2">Action</th>
+            </tr>
+            {% if view_post %}
+            {% for x in view_post %}
+            <tr>
+                <td><a href="{% url 'cms_app:single_post' x.id %}"><img src="{{ x.pst_image.url}}" alt="" class="img-thumbnail" width="200px" height="200px"></a></td>
+                <td>{{ x.pst_title }}</td>
+                <td><a href="{% url 'cms_app:single_post' x.id %}" class="btn btn-primary">View</a></td>
+                <td><a href="{% url 'cms_app:edit_post' x.id %}" class="btn btn-primary">Edit</a></td>
+                <td><a href="{% url 'cms_app:del_post' x.id %}" class="btn btn-danger">Delete</a></td>
+
+            </tr>
+            {% endfor %}
+            {% else %}
+                <center>
+                    No post in your dashboard
+                    <a href="{% url 'cms_app:post_form'%}" class="btn btn-primary">Add Post</a><br><br>
+                </center>
+            {% endif %}
+          </table> 
+             
+        
+        </div>
+      </div>
+    </div>
+    {% include 'cms_app/sidebar.html' %}
+
+  </div>
+</section>
+
+{% endblock %}
+
