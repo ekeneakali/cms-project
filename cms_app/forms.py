@@ -101,6 +101,17 @@ class ProfileForm(forms.ModelForm):
     class Meta():
         model = Profile
         fields = '__all__'
-        exclude = ['user']
+        exclude = ['user', 'subscribe']
+
+class PostForm(forms.ModelForm):
+    botfield = forms. CharField(widget=forms.HiddenInput, required=False, validators=[validators.MaxLengthValidator(0)])
+
+    
+
+    class Meta():
+        model = Post
+        fields = '__all__'
+        exclude = ['user', 'profile', 'likes', 'num_site']
+
 
 
