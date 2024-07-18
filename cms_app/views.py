@@ -142,7 +142,7 @@ def profile(request):
 
     profile = Profile.objects.filter(user=request.user)
 
-    post = Post.objects.filter(user=request.user).count()
+    post = Post.objects.filter(created_by=request.user).count()
     return render(request, 'cms_app/profile.html', {'profile':profile, 'post':post})
 
 def edit_pic(request):
@@ -189,7 +189,7 @@ def post_form(request):
         
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.user = request.user
+            instance.created_by = request.user
             instance.save()
             
             messages.success(request, 'Post added successfully ')
