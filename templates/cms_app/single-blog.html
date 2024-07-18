@@ -62,7 +62,7 @@ Blog detail
       {% endif %}
 
       
-      Author:<a href="">{{ single.user.username }}</a> 
+      Author:<a href="">{{ single.created_by.username }}</a> 
 
         {% if request.user.is_authenticated %}
         <p>
